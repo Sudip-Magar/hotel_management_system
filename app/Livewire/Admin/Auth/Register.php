@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Auth;
 
 use App\Models\Admin;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
@@ -39,6 +40,7 @@ class Register extends Component
                 session()->flash('success', 'Registration successful. You can now log in.');
                 return redirect()->route('admin.login');
             } catch (\Exception $e) {
+                DB::rollBack();
                 return response()->json(['error' => 'Registration failed. Please try again later.' . $e->getMessage()], 500);
             }
         } catch (ValidationException $e) {

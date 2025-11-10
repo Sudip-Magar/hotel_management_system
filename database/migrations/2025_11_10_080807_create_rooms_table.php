@@ -15,7 +15,8 @@ return new class extends Migration {
             $table->string('room_number')->unique();
             $table->foreignId('category_id')->constrained('room_categories')->cascadeOnDelete();
             $table->enum('status', ['available', 'occupied', 'maintenance', 'cleaning'])->default('available');
-            $table->decimal('price', 10, 2)->nullable(); // override category base price
+            $table->decimal('price', 10, 2)->nullable(); 
+            
             $table->timestamps();
         });
     }
