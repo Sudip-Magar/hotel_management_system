@@ -16,7 +16,8 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!Auth::guard('admin')->check()){
+        if (!Auth::guard('admin')->check()) {
+            session()->flash('error', 'Please log in to access the admin dashboard.');
             return redirect()->route('admin.login');
         }
         return $next($request);

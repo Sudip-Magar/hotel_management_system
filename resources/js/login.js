@@ -57,7 +57,7 @@ document.addEventListener('alpine:init', () => {
                 return;
             }
 
-            this.$wire.register(this.data).then((response) => {
+            this.$wire.login(this.data).then((response) => {
                 this.errors = {};
                 this.success = '';
                 this.serverErrors = '';

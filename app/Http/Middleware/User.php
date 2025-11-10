@@ -17,6 +17,7 @@ class User
     public function handle(Request $request, Closure $next): Response
     {
         if(!Auth::guard('web')->check()){
+            session()->flash('error', 'Please log in to access the user dashboard.');
             return redirect()->route('user.login');
         }
         return $next($request);
