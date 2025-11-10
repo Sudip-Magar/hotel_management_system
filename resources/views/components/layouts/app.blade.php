@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    @include('livewire.common.admin.header')
     {{ $slot }}
 </body>
 
