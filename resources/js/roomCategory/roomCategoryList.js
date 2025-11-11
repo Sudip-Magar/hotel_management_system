@@ -42,12 +42,14 @@ document.addEventListener('alpine:init', () => {
 
         fetchRoomCategories() {
             this.$wire.fetchRoomCategories().then((data) => {
+                console.log(data)
                 this.roomCategories = data;
             }).catch((error) => {
                 this.serverErrors = 'Failed to fetch room categories.';
             });
 
         },
+
         deleteModal(id) {
             const category = this.roomCategories.find(cat => cat.id === id);
             // this.data = {...category};
