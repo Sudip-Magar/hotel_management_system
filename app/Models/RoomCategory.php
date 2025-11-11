@@ -10,7 +10,6 @@ class RoomCategory extends Model
         'name',
         'description',
         'base_price',
-        'capacity',
     ];
 
     public function rooms()

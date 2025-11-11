@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->foreignId('category_id')->constrained('room_categories')->cascadeOnDelete();
             $table->enum('status', ['available', 'occupied', 'maintenance', 'cleaning'])->default('available');
             $table->decimal('price', 10, 2)->nullable(); 
+            $table->integer('max_guest');
             
             $table->timestamps();
         });

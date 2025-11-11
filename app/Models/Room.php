@@ -10,7 +10,8 @@ class Room extends Model
         'room_number',
         'category_id',
         'status',
-        'price'
+        'price',
+        'max_guest'
     ];
 
     public function category()
@@ -21,5 +22,9 @@ class Room extends Model
     public function reservations()
     {
         return $this->hasMany(Reservation::class);
+    }
+
+    public function roomImages(){
+        return $this->hasMany(RoomImage::class);
     }
 }
