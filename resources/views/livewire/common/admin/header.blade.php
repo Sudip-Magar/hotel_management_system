@@ -10,7 +10,7 @@
       <!-- Menu Links -->
       <div class="hidden md:flex items-center space-x-2">
         <a href="{{ route('admin.dashboard') }}" class="hover:bg-green-400 duration-150 py-1 px-2 rounded-md {{ request()->is('admin/dashboard') ? 'bg-green-300 text-green-800' : '' }}">Dashboard</a>
-        <a href="{{ route('admin.room-category.list') }}" class="hover:bg-green-400 duration-150 py-1 px-2 rounded-md {{ request()->is('admin/room-category/create') || request()->is('admin/room-category/list') ? 'bg-green-300 text-green-800' : '' }}">Room Category</a>
+        <a href="{{ route('admin.room-category.list') }}" class="hover:bg-green-400 duration-150 py-1 px-2 rounded-md {{ request()->is('admin/room-category/create') || request()->is('admin/room-category/list') || request()->is('admin/room-category/view*') ? 'bg-green-300 text-green-800' : '' }}">Room Category</a>
         <a href="" class="hover:bg-green-400 duration-150 py-1 px-2 rounded-md">Rooms</a>
         <a href="" class="hover:bg-green-400 duration-150 py-1 px-2 rounded-md">Bookings</a>
         <a href="" class="hover:bg-green-400 duration-150 py-1 px-2 rounded-md">Users</a>
