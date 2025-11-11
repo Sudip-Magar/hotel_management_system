@@ -2,5 +2,5 @@ import './bootstrap';
 import './register'
 import './login'
 import './dashboard'
-import './createRoomCategory'
-import './roomCategoryList'
+import './roomCategory/createRoomCategory'
+import './roomCategory/roomCategoryList'

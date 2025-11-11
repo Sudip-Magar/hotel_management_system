@@ -4,7 +4,6 @@ document.addEventListener('alpine:init', () => {
             name: '',
             description: '',
             base_price: '',
-            capacity: '',
         },
         errors: {},
         success: '',
@@ -34,13 +33,6 @@ document.addEventListener('alpine:init', () => {
             }
             else if (isNaN(this.data.base_price) || this.data.base_price < 0) {
                 this.errors.base_price = "Price must be a valid non-negative number.";
-            }
-
-             if (!this.data.capacity) {
-                this.errors.capacity = "Price is required.";
-            }
-            else if (isNaN(this.data.capacity) || this.data.ca < 0) {
-                this.errors.capacity = "Price must be a valid non-negative number.";
             }
             
 

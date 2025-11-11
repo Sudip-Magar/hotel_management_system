@@ -17,14 +17,13 @@ class CreateRoomCategory extends Component
                 'name' => 'required|string|min:3|max:30',
                 'description' => 'nullable|string|max:255',
                 'base_price' => 'required|numeric|min:0',
-                'capacity' => 'required|numeric|min:0',
             ])->validate();
 
             try {
                 RoomCategory::create($validation);
                 DB::commit();
-                session()->flash('success', 'Room category created successfully.');
-                return redirect()->route('admin.room-category.list');
+                // session()->flash('success', 'Room category created successfully.');
+                return redirect()->route('admin.room-category.list')->with('success', 'Room category created successfully.');
 
             } catch (\Exception $e) {
                 DB::rollBack();
