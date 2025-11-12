@@ -8,6 +8,9 @@ use App\Livewire\Admin\Menus\Dashboard as AdminDashboard;
 use App\Livewire\Admin\Menus\RoomCategory\CreateRoomCategory as AdminCreateRoomCategory;
 use App\Livewire\Admin\Menus\RoomCategory\RoomCategoryList as AdminRoomCategoryList;
 use App\Livewire\Admin\Menus\RoomCategory\ViewRoomCategory as adminViewRoomCategory;
+use App\Livewire\Admin\Menus\Room\CreateRoom as adminCreateRoom;
+use App\Livewire\Admin\Menus\Room\RoomList as adminRoomList;
+use App\Livewire\Admin\Menus\Room\ViewRoom as adminViewRoom;
 
 use App\Livewire\User\Auth\Login;
 
@@ -23,6 +26,9 @@ Route::prefix(('admin'))->group(function () {
         Route::get('/room-category/create', AdminCreateRoomCategory::class)->name('admin.room-category.create');
         Route::get('/room-category/list', AdminRoomCategoryList::class)->name('admin.room-category.list');
         Route::get('/room-category/view/{id}', adminViewRoomCategory::class)->name('admin.room-category.view');
+        Route::get('/room/create',adminCreateRoom::class)->name('admin.room.create');
+        Route::get('/room/list',adminRoomList::class)->name('admin.room.list');
+        Route::get('/room/view/{id}',adminViewRoom::class)->name('admin.room.view');
     });
 });
 

@@ -20,20 +20,29 @@
             </tr>
         </thead>
         <tbody>
-            <template x-for="(category,idx) in roomCategories">
-                <tr class="hover:bg-gray-100">
-                    <td class="px-4 py-2 border-b" x-text="idx + 1"></td>
-                    <td class="px-4 py-2 border-b" x-text="category.name"></td>
-                    <td class="px-4 py-2 border-b"
-                        x-text="category.description.split(' ').slice(0, 7).join(' ') + (category.description.split(' ').length > 7 ? '...' : '')">
-                    </td>
-                    <td class="px-4 py-2 border-b text-end" x-text="category.base_price"></td>
-                    <td class="px-4 py-2 border-b text-center space-x-2">
-                        <a :href="'/admin/room-category/view/' + category.id"
-                            class="cursor-pointer bg-blue-300 text-blue-700 hover:bg-blue-400 px-3 py-1 rounded"><i class="fa-solid fa-eye"></i></a>
-                        <button class="cursor-pointer bg-red-300 text-red-700 hover:bg-red-400 px-3 py-1 rounded"
-                            @click.prevent="deleteModal(category.id)"><i class="fa-solid fa-trash"></i></button>
-                    </td>
+            <template x-if="roomCategories || roomCategories.length > 0">
+                <template x-for="(category,idx) in roomCategories">
+                    <tr class="hover:bg-gray-100">
+                        <td class="px-4 py-2 border-b" x-text="idx + 1"></td>
+                        <td class="px-4 py-2 border-b" x-text="category.name"></td>
+                        <td class="px-4 py-2 border-b"
+                            x-text="category.description.split(' ').slice(0, 7).join(' ') + (category.description.split(' ').length > 7 ? '...' : '')">
+                        </td>
+                        <td class="px-4 py-2 border-b text-end" x-text="category.base_price"></td>
+                        <td class="px-4 py-2 border-b text-center space-x-2">
+                            <a :href="'/admin/room-category/view/' + category.id"
+                                class="cursor-pointer bg-blue-300 text-blue-700 hover:bg-blue-400 px-3 py-1 rounded"><i
+                                    class="fa-solid fa-eye"></i></a>
+                            <button class="cursor-pointer bg-red-300 text-red-700 hover:bg-red-400 px-3 py-1 rounded"
+                                @click.prevent="deleteModal(category.id)"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                </template>
+            </template>
+
+            <template x-if="!roomCategories || roomCategories.length === 0">
+                <tr class="text-center ">
+                    <td class="py-20 text-2xl font-semibold text-gray-400" colspan="5">Currently there no room Category. Try creating one </td>
                 </tr>
             </template>
         </tbody>
@@ -43,7 +52,8 @@
     <div x-show="showModal" x-transition.opacity x-cloak
         class="fixed inset-0 flex items-center justify-center bg-gray-900/80 z-75">
         <div @click.outside = 'showModal = false' class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
-            <span class="absolute top-5 right-5 cursor-pointer" @click.prevent="showModal = false"><i class="fa-solid fa-xmark"></i></span>
+            <span class="absolute top-5 right-5 cursor-pointer" @click.prevent="showModal = false"><i
+                    class="fa-solid fa-xmark"></i></span>
             <h2 class="text-xl font-semibold mb-4 text-red-500">
                 Delete Category
             </h2>
