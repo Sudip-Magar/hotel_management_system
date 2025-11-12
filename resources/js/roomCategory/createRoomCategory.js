@@ -82,7 +82,7 @@ document.addEventListener('alpine:init', () => {
                     this.timeoutFunc();
                 }
             }).catch((error) => {
-                console.log(error)
+                this.serverErrors = "Something went wrong " + error;
             });
         },
     }))

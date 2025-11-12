@@ -1,22 +1,17 @@
-// const Alpine = require("alpinejs");
-
 document.addEventListener('alpine:init', () => {
-    Alpine.data('roomCategoryList', () => ({
+    Alpine.data('roomList', () => ({
+        data: {
+            id: '',
+            room_number: '',
+        },
         errors: {},
         success: '',
         serverErrors: '',
-        roomCategories: [],
         showModal: false,
-        data: {
-            id: '',
-            name: '',
-
-        },
+        rooms: {},
 
         init() {
-            Alpine.nextTick(() => {
-                this.fetchRoomCategories();
-            })
+            this.fetchData();
         },
 
         timeoutFunc() {
@@ -39,26 +34,26 @@ document.addEventListener('alpine:init', () => {
             }
         },
 
-        fetchRoomCategories() {
-            this.$wire.fetchRoomCategories().then((data) => {
-                this.roomCategories = data;
+        fetchData() {
+            this.$wire.fetchData().then((response) => {
+                this.rooms = response
             }).catch((error) => {
-                this.serverErrors = 'Failed to fetch room categories.';
-            });
-
+                this.serverErrors = "Something wnet wrong " + error;
+                this.timeoutFunc();
+            })
         },
 
         deleteModal(id) {
-            const category = this.roomCategories.find(cat => cat.id === id);
-            this.data.id = category.id;
-            this.data.name = category.name;
+            const room = this.rooms.find(a => a.id === id);
+            this.data.id = room.id;
+            this.data.room_number = room.room_number;
             this.showModal = true;
         },
 
         confirmDelete() {
-            this.$wire.deleteRoomCategory(this.data.id).then((response) => {
+            this.$wire.deleteRoom(this.data.id).then((response) => {
                 this.showModal = false;
-                this.fetchRoomCategories();
+                this.fetchData();
                 if (response.original.success) {
                     this.success = response.original.success;
                     this.timeoutFunc();

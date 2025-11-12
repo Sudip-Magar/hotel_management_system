@@ -11,7 +11,7 @@
       <div class="hidden md:flex items-center space-x-2">
         <a href="{{ route('admin.dashboard') }}" class="hover:bg-green-400 duration-150 py-1 px-2 rounded-md {{ request()->is('admin/dashboard') ? 'bg-green-300 text-green-800' : '' }}">Dashboard</a>
         <a href="{{ route('admin.room-category.list') }}" class="hover:bg-green-400 duration-150 py-1 px-2 rounded-md {{ request()->is('admin/room-category/create') || request()->is('admin/room-category/list') || request()->is('admin/room-category/view*') ? 'bg-green-300 text-green-800' : '' }}">Room Category</a>
-        <a href="" class="hover:bg-green-400 duration-150 py-1 px-2 rounded-md">Rooms</a>
+        <a href="{{ route('admin.room.list') }}" class="hover:bg-green-400 duration-150 py-1 px-2 rounded-md {{ request()->is('admin/room/create') || request()->is('admin/room/list') || request()->is('admin/room/view*') ? 'bg-green-300 text-green-800' : '' }}">Rooms</a>
         <a href="" class="hover:bg-green-400 duration-150 py-1 px-2 rounded-md">Bookings</a>
         <a href="" class="hover:bg-green-400 duration-150 py-1 px-2 rounded-md">Users</a>
         <a href="" class="hover:bg-green-400 duration-150 py-1 px-2 rounded-md">Reports</a>
@@ -35,7 +35,7 @@
                viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 6h16M4 12h16M4 18h16"></path>
           </svg>
-        </button>
+        </button>z
       </div>
     </div>
   </div>
