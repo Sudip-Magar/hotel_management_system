@@ -3,15 +3,23 @@ document.addEventListener('alpine:init', () => {
         data: {
             room_number: '',
             category_id: '',
-            guest_type_id:'',
+            guest_type_id: '',
             price: '',
             max_guest: '',
+        },
+        feature: {
+            bedroom_count: '',
+            toilet_count: '',
+            has_kitchen: false,
+            has_balcony: false,
+            has_living_room: false,
         },
         errors: {},
         success: '',
         serverErrors: '',
         categories: [],
-        guestType:[],
+        guestType: [],
+        servicesDb: [],
         serviceShow: false,
         roomShow: true,
         featureShow: false,
@@ -46,6 +54,7 @@ document.addEventListener('alpine:init', () => {
                 console.log(response)
                 this.categories = response[0];
                 this.guestType = response[1];
+                this.servicesDb = response[2];
             }).catch((error) => {
                 this.serverErrors = "Something went worng " + error;
             })
@@ -81,6 +90,10 @@ document.addEventListener('alpine:init', () => {
                 this.errors.category_id = "Categroy is required";
             }
 
+            if (!this.data.guest_type_id) {
+                this.errors.guest_type_id = "guest type is required";
+            }
+
 
             return Object.keys(this.errors).length === 0;
         },
@@ -110,7 +123,7 @@ document.addEventListener('alpine:init', () => {
                 return
             }
 
-            this.$wire.registerRoom(this.data, this.services).then((response) => {
+            this.$wire.registerRoom(this.data, this.services,this.feature).then((response) => {
                 this.errors = {};
                 this.success = '';
                 this.serverErrors = '';
@@ -122,11 +135,10 @@ document.addEventListener('alpine:init', () => {
                 }
                 else if (response.original.error) {
                     this.serverErrors = response.original.error;
-                    this.timeoutFunc();
+                    // this.timeoutFunc();
                 }
-            }).then((error) => {
-                this.serverErrors = "Something went wrong " + error;
-                this.timeoutFunc();
+            }).catch((error) => {
+               
             })
         },
 

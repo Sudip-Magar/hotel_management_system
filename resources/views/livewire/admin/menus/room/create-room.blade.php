@@ -138,82 +138,58 @@
         <div x-show="serviceShow" class="">
             <h2 class="text-lg font-semibold mb-4">Select Services</h2>
             <div class="grid grid-cols-3 space-y-2">
-                <label class="inline-flex items-center">
-                    <input type="checkbox" x-model="services" value="Breakfast"
-                        class="form-checkbox h-5 w-5 text-green-500">
-                    <span class="ml-2 text-gray-700">Breakfast</span>
-                </label>
-
-                <label class="inline-flex items-center">
-                    <input type="checkbox" x-model="services" value="Airport Pickup"
-                        class="form-checkbox h-5 w-5 text-green-500">
-                    <span class="ml-2 text-gray-700">Airport Pickup</span>
-                </label>
-
-                <label class="inline-flex items-center">
-                    <input type="checkbox" x-model="services" value="Spa Access"
-                        class="form-checkbox h-5 w-5 text-green-500">
-                    <span class="ml-2 text-gray-700">Spa Access</span>
-                </label>
-
-                <label class="inline-flex items-center">
-                    <input type="checkbox" x-model="services" value="Gym Access"
-                        class="form-checkbox h-5 w-5 text-green-500">
-                    <span class="ml-2 text-gray-700">Gym Access</span>
-                </label>
-
-                <label class="inline-flex items-center">
-                    <input type="checkbox" x-model="services" value="Laundry"
-                        class="form-checkbox h-5 w-5 text-green-500">
-                    <span class="ml-2 text-gray-700">Laundry</span>
-                </label>
-
-                <label class="inline-flex items-center">
-                    <input type="checkbox" x-model="services" value="Wi-Fi"
-                        class="form-checkbox h-5 w-5 text-green-500">
-                    <span class="ml-2 text-gray-700">Wi-Fi</span>
-                </label>
-
-                <label class="inline-flex items-center">
-                    <input type="checkbox" x-model="services" value="Room Service"
-                        class="form-checkbox h-5 w-5 text-green-500">
-                    <span class="ml-2 text-gray-700">Room Service</span>
-                </label>
-
-                <label class="inline-flex items-center">
-                    <input type="checkbox" x-model="services" value="Mini Bar"
-                        class="form-checkbox h-5 w-5 text-green-500">
-                    <span class="ml-2 text-gray-700">Mini Bar</span>
-                </label>
-
-                <label class="inline-flex items-center">
-                    <input type="checkbox" x-model="services" value="Laundry Pickup"
-                        class="form-checkbox h-5 w-5 text-green-500">
-                    <span class="ml-2 text-gray-700">Laundry Pickup</span>
-                </label>
-
-                <label class="inline-flex items-center">
-                    <input type="checkbox" x-model="services" value="Concierge"
-                        class="form-checkbox h-5 w-5 text-green-500">
-                    <span class="ml-2 text-gray-700">Concierge</span>
-                </label>
-
-                <label class="inline-flex items-center">
-                    <input type="checkbox" x-model="services" value="Valet Parking"
-                        class="form-checkbox h-5 w-5 text-green-500">
-                    <span class="ml-2 text-gray-700">Valet Parking</span>
-                </label>
+                <template x-for="(service,idx) in servicesDb">
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" x-model="services" :value="service.id"
+                            class="form-checkbox h-5 w-5 text-green-500">
+                        <span class="ml-2 text-gray-700" x-text="service.name"></span>
+                    </label>
+                </template>
             </div>
         </div>
 
-        <div x-show="featureShow">hey</div>
+        <div x-show="featureShow">
+            <div class="mb-4">
+                <label for="bedroom_count" class="block text-gray-700 font-medium mb-2">Total Bedroom:</label>
+                <input type="number" id="bedroom_count" x-model="feature.bedroom_count"
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                    placeholder="Enter total bedroom">
+            </div>
+
+            <div class="mb-4">
+                <label for="toilet_count" class="block text-gray-700 font-medium mb-2">Total toilet:</label>
+                <input type="number" id="bedroom_count" x-model="feature.toilet_count"
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                    placeholder="Enter total toilet">
+            </div>
+
+            <div class="grid grid-cols-3 space-y-2">
+                <label class="inline-flex items-center">
+                    <input type="checkbox" x-model="feature.has_kitchen" :value="feature.has_kitchen"
+                        class="form-checkbox h-5 w-5 text-green-500">
+                    <span class="ml-2 text-gray-700">Kitchen</span>
+                </label>
+
+                <label class="inline-flex items-center">
+                    <input type="checkbox" x-model="feature.has_balcony" :value="feature.has_balcony"
+                        class="form-checkbox h-5 w-5 text-green-500">
+                    <span class="ml-2 text-gray-700">Balcony</span>
+                </label>
+
+                <label class="inline-flex items-center">
+                    <input type="checkbox" x-model="feature.has_living_room" :value="feature.has_living_room"
+                        class="form-checkbox h-5 w-5 text-green-500">
+                    <span class="ml-2 text-gray-700">Living Room</span>
+                </label>
+            </div>
+        </div>
 
 
 
 
         <!-- Submit Button -->
         <div class="mt-6">
-            <button @click.pevent="hello"
+            <button
                 class="cursor-pointer w-full bg-green-400 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded-lg">
                 Save Room
             </button>
