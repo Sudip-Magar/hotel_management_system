@@ -3,11 +3,16 @@
 namespace App\Livewire\User\Menu;
 
 use Livewire\Component;
+use App\Models\Room as modelRoom;
 
 class Room extends Component
 {
-        public function fetchData(){
-        return \App\Models\Room::with('category','roomImages')->latest()->get();
+    public function fetchData()
+    {
+        $rooms = modelRoom::with('category', 'roomImages', 'services', 'guestType', 'roomFeature')->latest()->get();
+        // $rooms->load('category', 'roomImages', 'services', 'guestType', 'roomFeature');
+        return $rooms;
+
     }
 
 
