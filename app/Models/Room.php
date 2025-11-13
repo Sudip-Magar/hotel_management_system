@@ -37,7 +37,7 @@ class Room extends Model
 
     public function guestType()
     {
-        return $this->hasOne(GuestType::class);
+        return $this->belongsTo(GuestType::class);
     }
 
     public function roomFeature(){
