@@ -10,6 +10,7 @@ class Room extends Model
         'room_number',
         'category_id',
         'status',
+        'guest_type_id',
         'price',
         'max_guest'
     ];
@@ -24,7 +25,20 @@ class Room extends Model
         return $this->hasMany(Reservation::class);
     }
 
-    public function roomImages(){
+    public function roomImages()
+    {
         return $this->hasMany(RoomImage::class);
     }
+
+    public function services()
+    {
+        return $this->belongsToMany(Service::class, 'room_service');
+    }
+
+    public function guestType()
+    {
+        return $this->hasOne(GuestType::class);
+    }
+
+
 }
