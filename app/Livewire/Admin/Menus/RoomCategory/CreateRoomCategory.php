@@ -16,7 +16,6 @@ class CreateRoomCategory extends Component
             $validation = validator($data, [
                 'name' => 'required|string|min:3|max:30',
                 'description' => 'nullable|string|max:255',
-                'base_price' => 'required|numeric|min:0',
             ])->validate();
 
             try {

@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('room_number')->unique();
             $table->foreignId('category_id')->constrained('room_categories')->cascadeOnDelete();
             $table->foreignId('guest_type_id')->constrained('guest_types')->cascadeOnDelete();
+            $table->integer('price');
             $table->enum('status', ['available', 'occupied', 'maintenance', 'cleaning'])->default('available');
             $table->integer('max_guest'); // actual capacity of this room
             $table->timestamps();

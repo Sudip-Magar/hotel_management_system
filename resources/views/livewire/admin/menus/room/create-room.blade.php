@@ -9,9 +9,39 @@
     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Add Room</h2>
 
     <form @submit.prevent="registerRoom">
-        <div class="text-end">
-            <button @click.prevent="serviceShowButton" class="bg-blue-300 text-blue-800 py-1 px-2 rounded-lg cursor-pointer hover:bg-blue-400" x-text="serviceShow ? 'Room':'Service'"></button>
+        <div class="flex justify-end space-x-2">
+            <!-- Room Tab -->
+            <button @click.prevent="RoomShowButton"
+                class="py-2 px-4 cursor-pointer transition duration-200 font-medium text-sm"
+                :class="roomShow
+                    ?
+                    'bg-blue-100 text-blue-800 border-t border-l border-r rounded-t-lg shadow' :
+                    'bg-blue-50 text-blue-600 border-b border-b-blue-300 hover:bg-blue-100'">
+                Room
+            </button>
+
+            <!-- Service Tab -->
+            <button @click.prevent="serviceShowButton"
+                class="py-2 px-4 cursor-pointer transition duration-200 font-medium text-sm"
+                :class="serviceShow
+                    ?
+                    'bg-blue-100 text-blue-800 border-t border-l border-r rounded-t-lg shadow' :
+                    'bg-blue-50 text-blue-600 border-b border-b-blue-300 hover:bg-blue-100'">
+                Service
+            </button>
+
+            <!-- Room Detail Tab -->
+            <button @click.prevent="featureShowButton"
+                class="py-2 px-4 cursor-pointer transition duration-200 font-medium text-sm"
+                :class="featureShow
+                    ?
+                    'bg-blue-100 text-blue-800 border-t border-l border-r rounded-t-lg shadow' :
+                    'bg-blue-50 text-blue-600 border-b border-b-blue-300 hover:bg-blue-100'">
+                Room Detail
+            </button>
+
         </div>
+
 
         <div x-show="roomShow">
             <!-- Category Name -->
@@ -25,19 +55,38 @@
                 </template>
             </div>
 
-            <div class="mb-4">
-                <label for="category">Room Category:</label>
-                <select class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                    x-model="data.category_id">
-                    <option>-- Select Room Category --</option>
-                    <template x-for="(category,idx) in categories">
-                        <option :value="category.id" :key="category.id" x-text="category.name"> <span></span>
-                        </option>
+            <div class="grid grid-cols-2 gap-3">
+                <div class="mb-4">
+                    <label for="category">Room Category:</label>
+                    <select
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                        x-model="data.category_id">
+                        <option>-- Select Room Category --</option>
+                        <template x-for="(category,idx) in categories">
+                            <option :value="category.id" :key="category.id" x-text="category.name"> <span></span>
+                            </option>
+                        </template>
+                    </select>
+                    <template x-if="errors.category_id">
+                        <small class="text-red-500" x-text="errors.category_id"></small>
                     </template>
-                </select>
-                <template x-if="errors.category_id">
-                    <small class="text-red-500" x-text="errors.category_id"></small>
-                </template>
+                </div>
+
+                <div class="mb-4">
+                    <label for="category">Guest Type:</label>
+                    <select
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                        x-model="data.guest_type_id">
+                        <option>-- Select Guest Type --</option>
+                        <template x-for="(type,idx) in guestType">
+                            <option :value="type.id" :key="type.id" x-text="type.name"> <span></span>
+                            </option>
+                        </template>
+                    </select>
+                    <template x-if="errors.guest_type_id">
+                        <small class="text-red-500" x-text="errors.guest_type_id"></small>
+                    </template>
+                </div>
             </div>
 
             <!-- Price -->
@@ -70,6 +119,20 @@
                     Image</label>
                 <input type="file" wire:model='images' class="hidden" id="image" multiple>
             </div>
+
+            @if ($images)
+                <div class="mt-3 flex flex-wrap gap-3">
+                    @foreach ($images as $index => $image)
+                        <div class="relative">
+                            <img src="{{ $image->temporaryUrl() }}" class="h-24 w-24 object-cover rounded-lg">
+                            <button type="button" wire:click="removeImage({{ $index }})"
+                                class="cursor-pointer absolute top-0 right-0 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600">
+                                &times;
+                            </button>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
         </div>
 
         <div x-show="serviceShow" class="">
@@ -143,20 +206,10 @@
             </div>
         </div>
 
+        <div x-show="featureShow">hey</div>
 
-        @if ($images)
-            <div class="mt-3 flex flex-wrap gap-3">
-                @foreach ($images as $index => $image)
-                    <div class="relative">
-                        <img src="{{ $image->temporaryUrl() }}" class="h-24 w-24 object-cover rounded-lg">
-                        <button type="button" wire:click="removeImage({{ $index }})"
-                            class="cursor-pointer absolute top-0 right-0 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600">
-                            &times;
-                        </button>
-                    </div>
-                @endforeach
-            </div>
-        @endif
+
+
 
         <!-- Submit Button -->
         <div class="mt-6">

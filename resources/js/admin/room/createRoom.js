@@ -3,6 +3,7 @@ document.addEventListener('alpine:init', () => {
         data: {
             room_number: '',
             category_id: '',
+            guest_type_id:'',
             price: '',
             max_guest: '',
         },
@@ -10,14 +11,29 @@ document.addEventListener('alpine:init', () => {
         success: '',
         serverErrors: '',
         categories: [],
-        serviceShow:false,
+        guestType:[],
+        serviceShow: false,
         roomShow: true,
-        services:[],
+        featureShow: false,
+        services: [],
 
 
-        serviceShowButton(){
-            this.serviceShow = !this.serviceShow;
-            this.roomShow = !this.roomShow;
+        serviceShowButton() {
+            this.serviceShow = true;
+            this.roomShow = false;
+            this.featureShow = false;
+        },
+
+        RoomShowButton() {
+            this.serviceShow = false;
+            this.roomShow = true;
+            this.featureShow = false;
+        },
+
+        featureShowButton() {
+            this.serviceShow = false;
+            this.roomShow = false;
+            this.featureShow = true;
         },
 
 
@@ -27,7 +43,9 @@ document.addEventListener('alpine:init', () => {
 
         fetchData() {
             this.$wire.fetchData().then((response) => {
-                this.categories = response;
+                console.log(response)
+                this.categories = response[0];
+                this.guestType = response[1];
             }).catch((error) => {
                 this.serverErrors = "Something went worng " + error;
             })
@@ -92,7 +110,7 @@ document.addEventListener('alpine:init', () => {
                 return
             }
 
-            this.$wire.registerRoom(this.data,this.services).then((response) => {
+            this.$wire.registerRoom(this.data, this.services).then((response) => {
                 this.errors = {};
                 this.success = '';
                 this.serverErrors = '';

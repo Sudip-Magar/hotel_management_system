@@ -16,6 +16,7 @@ use App\Livewire\Admin\Menus\Room\CreateRoom as adminCreateRoom;
 use App\Livewire\Admin\Menus\Room\RoomList as adminRoomList;
 use App\Livewire\Admin\Menus\Room\ViewRoom as adminViewRoom;
 use App\Livewire\Admin\Menus\GuestType as adminGuestType;
+use App\Livewire\Admin\Menus\Service as adminService;
 
 use App\Livewire\User\Auth\Login;
 
@@ -35,6 +36,7 @@ Route::prefix(('admin'))->group(function () {
         Route::get('/room/list', adminRoomList::class)->name('admin.room.list');
         Route::get('/room/view/{id}', adminViewRoom::class)->name('admin.room.view');
         Route::get('/guest-type',adminGuestType::class)->name('admin.guest-type');
+        Route::get('/service',adminService::class)->name('admin.service');
     });
 });
 

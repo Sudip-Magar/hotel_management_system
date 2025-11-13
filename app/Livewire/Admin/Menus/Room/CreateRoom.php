@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Menus\Room;
 
+use App\Models\GuestType;
 use App\Models\Room;
 use App\Models\RoomCategory;
 use App\Models\RoomImage;
@@ -17,7 +18,9 @@ class CreateRoom extends Component
     public $images = [];
     public function fetchData()
     {
-        return RoomCategory::latest()->get();
+        $categories = RoomCategory::latest()->get();
+        $guestType = GuestType::latest()->get();
+        return [$categories, $guestType];
     }
 
     public function registerRoom($data, $services)

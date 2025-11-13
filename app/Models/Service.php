@@ -8,7 +8,6 @@ class Service extends Model
 {
     protected $fillable = [
         'name',
-        'room_id'
     ];
 
     public function rooms()
