@@ -9,7 +9,6 @@ class RoomCategory extends Model
     protected $fillable = [
         'name',
         'description',
-        'base_price',
     ];
 
     public function rooms()

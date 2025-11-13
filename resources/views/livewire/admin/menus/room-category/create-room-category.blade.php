@@ -30,18 +30,7 @@
                 <small class="text-red-500" x-text="errors.description"></small>
             </template>
         </div>
-
-        <!-- Price -->
-        <div class="mb-4">
-            <label for="price" class="block text-gray-700 font-medium mb-2">Price per Night</label>
-            <input type="number" id="price" min="0" x-model="data.base_price"
-                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                placeholder="Enter price" required>
-            <template x-if="errors.base_price">
-                <small class="text-red-500" x-text="errors.base_price"></small>
-            </template>
-        </div>
-
+        
         <!-- Submit Button -->
         <div class="mt-6">
             <button type="submit"

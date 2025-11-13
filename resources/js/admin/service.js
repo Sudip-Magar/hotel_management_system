@@ -1,5 +1,5 @@
 document.addEventListener('alpine:init', () => {
-    Alpine.data('guestType', () => ({
+    Alpine.data('service', () => ({
         errors: {},
         success: '',
         serverErrors: '',
@@ -33,7 +33,7 @@ document.addEventListener('alpine:init', () => {
             if (!this.data.name) {
                 this.errors.name = "Name is required.";
             }
-            else if (this.data.name.length < 3) {
+            else if (this.data.name.length < 2) {
                 this.errors.name = "Name must be at least 3 characters.";
             }
             else if (this.data.name.length > 30) {
@@ -49,7 +49,7 @@ document.addEventListener('alpine:init', () => {
             if (!this.temData.name) {
                 this.errors.tempName = "Name is required.";
             }
-            else if (this.temData.name.length < 3) {
+            else if (this.temData.name.length < 2) {
                 this.errors.tempName = "Name must be at least 3 characters.";
             }
             else if (this.temData.name.length > 30) {
@@ -105,7 +105,7 @@ document.addEventListener('alpine:init', () => {
                     this.success = response.original.success;
                     this.data = {};
                     this.fetchData();
-                    this.timeoutFunc();
+                    this.timeoutFunc()
                 }
             }).catch((error) => {
                 this.serverErrors = "Something went wrong " + error;

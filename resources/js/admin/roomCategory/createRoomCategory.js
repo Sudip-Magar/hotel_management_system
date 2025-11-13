@@ -27,13 +27,6 @@ document.addEventListener('alpine:init', () => {
             if (!this.data.description.length > 100) {
                 this.errors.description = "Name must not exceed 100 characters.";
             }
-
-            if (!this.data.base_price) {
-                this.errors.base_price = "Price is required.";
-            }
-            else if (isNaN(this.data.base_price) || this.data.base_price < 0) {
-                this.errors.base_price = "Price must be a valid non-negative number.";
-            }
             
 
             return Object.keys(this.errors).length === 0;
@@ -70,7 +63,6 @@ document.addEventListener('alpine:init', () => {
                 this.errors = {};
                 this.success = '';
                 this.serverErrors = '';
-                console.log(response)
                 if (response.original.errors) {
                     Object.entries(response.original.errors).forEach(([key, message]) => {
                         this.errors[key] = message[0];
@@ -82,7 +74,7 @@ document.addEventListener('alpine:init', () => {
                     this.timeoutFunc();
                 }
             }).catch((error) => {
-                this.serverErrors = "Something went wrong " + error;
+                // this.serverErrors = "client " + error;
             });
         },
     }))

@@ -9,6 +9,7 @@ import './admin/room/createRoom'
 import './admin/room/roomList'
 import './admin/room/viewRoom'
 import './admin/guestType'
+import './admin/service'
 
 import './user/room'
 import './user/roomDatail'
