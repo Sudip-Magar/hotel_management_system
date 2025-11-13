@@ -10,6 +10,16 @@ document.addEventListener('alpine:init', () => {
         success: '',
         serverErrors: '',
         categories: [],
+        serviceShow:false,
+        roomShow: true,
+        services:[],
+
+
+        serviceShowButton(){
+            this.serviceShow = !this.serviceShow;
+            this.roomShow = !this.roomShow;
+        },
+
 
         init() {
             this.fetchData();
@@ -82,7 +92,7 @@ document.addEventListener('alpine:init', () => {
                 return
             }
 
-            this.$wire.registerRoom(this.data).then((response) => {
+            this.$wire.registerRoom(this.data,this.services).then((response) => {
                 this.errors = {};
                 this.success = '';
                 this.serverErrors = '';

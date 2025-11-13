@@ -8,3 +8,7 @@ import './admin/roomCategory/viewRoomCategory'
 import './admin/room/createRoom'
 import './admin/room/roomList'
 import './admin/room/viewRoom'
+import './admin/guestType'
+
+import './user/room'
+import './user/roomDatail'
