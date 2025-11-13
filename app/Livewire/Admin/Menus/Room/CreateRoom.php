@@ -5,7 +5,9 @@ namespace App\Livewire\Admin\Menus\Room;
 use App\Models\GuestType;
 use App\Models\Room;
 use App\Models\RoomCategory;
+use App\Models\RoomFeature;
 use App\Models\RoomImage;
+use App\Models\roomService;
 use App\Models\Service;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -20,10 +22,11 @@ class CreateRoom extends Component
     {
         $categories = RoomCategory::latest()->get();
         $guestType = GuestType::latest()->get();
-        return [$categories, $guestType];
+        $service = Service::latest()->get();
+        return [$categories, $guestType, $service];
     }
 
-    public function registerRoom($data, $services)
+    public function registerRoom($data, $services, $feature)
     {
         try {
 
@@ -31,6 +34,7 @@ class CreateRoom extends Component
                 'room_number' => 'required|max:20|unique:rooms,room_number',
                 'price' => 'required|max:20',
                 'category_id' => 'required',
+                'guest_type_id' => 'required',
                 'max_guest' => 'required',
             ])->validate();
 
@@ -48,11 +52,20 @@ class CreateRoom extends Component
                 }
 
                 foreach ($services as $service) {
-                    Service::create([
-                        'name' => $service,
+                    roomService::create([
                         'room_id' => $room->id,
+                        'service_id' => $service,
                     ]);
                 }
+
+                RoomFeature::create([
+                    'room_id' => $room->id,
+                    'bedroom_count' => $feature['bedroom_count'],
+                    'toilet_count' => $feature['toilet_count'],
+                    'has_kitchen' => $feature['has_kitchen'],
+                    'has_balcony' => $feature['has_balcony'],
+                    'has_living_room' => $feature['has_living_room'],
+                ]);
 
                 DB::commit();
                 session()->flash('success', 'Room created Successfully');

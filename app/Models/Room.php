@@ -32,12 +32,16 @@ class Room extends Model
 
     public function services()
     {
-        return $this->belongsToMany(Service::class, 'room_service');
+        return $this->belongsToMany(Service::class, 'room_services');
     }
 
     public function guestType()
     {
         return $this->hasOne(GuestType::class);
+    }
+
+    public function roomFeature(){
+        return $this->hasOne(RoomFeature::class);
     }
 
 

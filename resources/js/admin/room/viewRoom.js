@@ -4,23 +4,65 @@ document.addEventListener('alpine:init', () => {
             room_number: '',
             category_id: '',
             price: '',
+            guest_type_id: '',
             max_guest: '',
             room_images: {},
         },
+
+        feature: {
+            bedroom_count: '',
+            toilet_count: '',
+            has_kitchen: false,
+            has_balcony: false,
+            has_living_room: false,
+        },
+
         errors: {},
         success: '',
         serverErrors: '',
         categories: [],
-        rooms: [],
+        guestType: [],
+        serviceShow: false,
+        roomShow: true,
+        featureShow: false,
+        services: [], // all services from backend
+        selectedServices: [], // ids that are checked
 
         init() {
             this.fetchData();
         },
 
+        serviceShowButton() {
+            this.serviceShow = true;
+            this.roomShow = false;
+            this.featureShow = false;
+        },
+
+        RoomShowButton() {
+            this.serviceShow = false;
+            this.roomShow = true;
+            this.featureShow = false;
+        },
+
+        featureShowButton() {
+            this.serviceShow = false;
+            this.roomShow = false;
+            this.featureShow = true;
+        },
+
         fetchData() {
             this.$wire.fetchData().then((response) => {
                 this.categories = response[0];
-                Object.assign(this.data, response[1]);
+                this.guestType = response[1]
+                Object.assign(this.data, response[2]);
+                this.feature = {
+                    ...response[2].room_feature,
+                    has_kitchen: !!response[2].room_feature.has_kitchen,
+                    has_balcony: !!response[2].room_feature.has_balcony,
+                    has_living_room: !!response[2].room_feature.has_living_room,
+                };
+                this.services = response[3];
+                this.selectedServices = response[4]; // already checked ones
             }).catch((error) => {
                 this.serverErrors = "Something went worng " + error;
             })
@@ -57,6 +99,11 @@ document.addEventListener('alpine:init', () => {
             }
 
 
+            if (!this.data.guest_type_id) {
+                this.errors.guest_type_id = "guest type is required";
+            }
+
+
             return Object.keys(this.errors).length === 0;
         },
 
@@ -85,7 +132,7 @@ document.addEventListener('alpine:init', () => {
                 this.timeoutFunc();
                 return;
             }
-            this.$wire.updateRoom(this.data).then((response) => {
+            this.$wire.updateRoom(this.data, this.feature, this.selectedServices).then((response) => {
                 this.errors = {};
                 this.success = '';
                 this.serverErrors = '';
@@ -100,13 +147,14 @@ document.addEventListener('alpine:init', () => {
                     this.timeoutFunc();
                 }
 
-                else if(response.original.success){
+                else if (response.original.success) {
                     this.success = response.original.success;
                     this.timeoutFunc();
                 }
             }).catch((error) => {
                 this.serverErrors = "Something went wrong client " + error;
             })
+
         },
     }))
 })

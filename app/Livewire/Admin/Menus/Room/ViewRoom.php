@@ -2,9 +2,13 @@
 
 namespace App\Livewire\Admin\Menus\Room;
 
+use App\Models\GuestType;
 use App\Models\Room;
 use App\Models\RoomCategory;
+use App\Models\RoomFeature;
 use App\Models\RoomImage;
+use App\Models\roomService;
+use App\Models\Service;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
@@ -19,14 +23,18 @@ class ViewRoom extends Component
 
     public function mount($id)
     {
-        $this->room = Room::with('category', 'roomImages')->findOrFail($id);
+        $this->room = Room::with('category', 'roomImages', 'services', 'roomFeature')->findOrFail($id);
         $this->oldImages = RoomImage::where('room_id', $id)->get(['image'])->toArray();
     }
 
     public function fetchData()
     {
         $roomCategoy = RoomCategory::latest()->get();
-        return [$roomCategoy, $this->room];
+        $guestType = GuestType::latest()->get();
+        $allServices = Service::latest()->get();
+        $room = $this->room->load('category', 'roomImages', 'services', 'roomFeature')->toArray();
+        $selectedServices = $this->room->services->pluck('id')->toArray();
+        return [$roomCategoy, $guestType, $room, $allServices, $selectedServices];
     }
 
     public function removeImage($index)
@@ -40,13 +48,14 @@ class ViewRoom extends Component
         }
     }
 
-    public function updateRoom($data)
+    public function updateRoom($data, $feature, $services)
     {
         try {
             $validation = validator($data, [
                 'room_number' => 'required|max:20',
                 'price' => 'required|max:20',
                 'category_id' => 'required',
+                'guest_type_id' => 'required',
                 'max_guest' => 'required',
             ])->validate();
 
@@ -85,6 +94,24 @@ class ViewRoom extends Component
                         ]);
                     }
                 }
+
+                roomService::where('room_id', $room->id)->delete();
+                foreach ($services as $service) {
+                    roomService::create([
+                        'room_id' => $room->id,
+                        'service_id' => $service,
+                    ]);
+                }
+                $roomFeature = RoomFeature::where('room_id', $room->id);
+                $roomFeature->update([
+                    'room_id' => $room->id,
+                    'bedroom_count' => $feature['bedroom_count'],
+                    'toilet_count' => $feature['toilet_count'],
+                    'has_kitchen' => $feature['has_kitchen'],
+                    'has_balcony' => $feature['has_balcony'],
+                    'has_living_room' => $feature['has_living_room'],
+                ]);
+
 
                 DB::commit();
 
