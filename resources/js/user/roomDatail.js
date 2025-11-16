@@ -15,6 +15,7 @@ document.addEventListener('alpine:init', () => {
             booking_status: '',
             guest_name: '',
             guest_phone: '',
+            email: '',
         },
         showModal: false,
         loaded: false,
@@ -71,6 +72,13 @@ document.addEventListener('alpine:init', () => {
                 this.errors.guest_phone = "Invalid Phone number";
             }
 
+            if (!this.data.email) {
+                this.errors.email = "Email is required.";
+            }
+            else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.data.email)) {
+                this.errors.email = "Please enter a valid email address.";
+            }
+
             return Object.keys(this.errors).length === 0;
         },
 
@@ -94,10 +102,10 @@ document.addEventListener('alpine:init', () => {
                 }, 3000);
             }
 
-            if(this.dateError){
+            if (this.dateError) {
                 setTimeout(() => {
                     this.dateError = '';
-                },3000);
+                }, 3000);
             }
         },
 
@@ -146,6 +154,7 @@ document.addEventListener('alpine:init', () => {
                 booking_status: 'booked',
                 guest_name: this.data.guest_name,
                 guest_phone: this.data.guest_phone,
+                email: this.data.email
             };
 
             this.$wire.reserve(payload).then((response) => {

@@ -16,7 +16,8 @@ class Reservation extends Model
         'payment_status',
         'booking_status',
         'guest_name',
-        'guest_phone'
+        'guest_phone',
+        'email',
     ];
 
     public function user()

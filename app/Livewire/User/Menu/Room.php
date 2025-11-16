@@ -2,8 +2,11 @@
 
 namespace App\Livewire\User\Menu;
 
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 use App\Models\Room as modelRoom;
+
+#[Layout('components.layouts.user')]
 
 class Room extends Component
 {

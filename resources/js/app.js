@@ -13,3 +13,5 @@ import './admin/service'
 
 import './user/room'
 import './user/roomDatail'
+import './user/register'
+import './user/login'

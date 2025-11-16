@@ -62,7 +62,7 @@
                             <!-- Services -->
                             <div class="mb-4">
                                 <h3 class="font-semibold mb-1">Services:</h3>
-                                <div class="grid grid-cols-4 text-center gap-3">
+                                <div class="grid grid-cols-2 text-center gap-3">
                                     <template x-for="(service,idx) in room.services.slice(0,4)">
 
                                         <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm"

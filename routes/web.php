@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MailController;
 use App\Livewire\User\Auth\Register;
 use App\Livewire\User\Menu\Home;
 use App\Livewire\User\Menu\Room;
@@ -44,7 +45,7 @@ Route::group([], function () {
 
     Route::get('/login', Login::class)->name('user.login');
     Route::get('/register', Register::class)->name('user.register');
-    Route::get('/',Home::class)->name('user.name');
+    Route::get('/',Home::class)->name('user.home');
     Route::get('/room',Room::class)->name('user.room');
     Route::get('/room/room-detail/{id}', RoomDetail::class)->name('user.room-detail');
 
