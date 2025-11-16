@@ -13,7 +13,7 @@
                 {{-- <span class="hidden md:block">{{ Auth::guard('admin')->user()->name }}</span> --}}
                 @if (Auth::guard('web')->check())
                     <span>{{ Auth::guard('web')->user()->name }}</span>
-                    <form method="POST" class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded">
+                    <form method="POST" action="{{ route('user.logout') }}" class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded">
                         @csrf
                         <button class="cursor-pointer" type="submit">Logout</button>
                     </form>

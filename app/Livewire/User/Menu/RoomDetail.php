@@ -5,6 +5,7 @@ namespace App\Livewire\User\Menu;
 use App\Models\Reservation;
 use App\Mail\reservation as mailReservation;
 use App\Models\Room;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -15,16 +16,19 @@ use Livewire\Component;
 #[Layout('components.layouts.user')]
 class RoomDetail extends Component
 {
-    public $room;
+    public $room, $user;
     public function mount($id)
     {
         $this->room = Room::with('category', 'roomImages', 'services', 'guestType', 'roomFeature', 'reservations')->findOrFail($id);
-        // return $room;
+        if(Auth::guard('web')->check()){
+            $this->user = Auth::guard('web')->user();
+        }
     }
     public function fetchData()
     {
         $room = $this->room->load('category', 'roomImages', 'services', 'guestType', 'roomFeature', 'reservations');
-        return $room;
+        // dd($this->user);
+            return [$room,$this->user];
     }
 
     public function sendMail($payload)

@@ -13,4 +13,10 @@ class AuthController extends Controller
 
         return redirect()->route('admin.login');
     }
+
+    public function userLogout(){
+        auth()->guard('web')->logout();
+        session()->flash('success', 'Logged out successfully');
+        return redirect()->back();
+    }
 }
