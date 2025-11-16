@@ -44,7 +44,7 @@ Route::group([], function () {
 
     Route::get('/login', Login::class)->name('user.login');
     Route::get('/register', Register::class)->name('user.register');
-    Route::get('/',Home::class)->name('user.name');
+    Route::get('/',Home::class)->name('user.home');
     Route::get('/room',Room::class)->name('user.room');
     Route::get('/room/room-detail/{id}', RoomDetail::class)->name('user.room-detail');
 

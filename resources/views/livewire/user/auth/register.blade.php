@@ -1,4 +1,4 @@
-<div class="min-h-screen flex items-center justify-center bg-gray-100 px-4" x-data="register">
+<div class="min-h-screen flex items-center justify-center bg-gray-100 px-4" x-data="userRegister">
     @include('livewire.common.message')
 
     <div class="bg-white shadow-xl rounded-xl p-8 w-full max-w-md">
@@ -7,7 +7,7 @@
             Admin Registration
         </h2>
         <p class="text-sm text-gray-500 mb-6 text-center">
-            Create your administrator account
+            Create your account
         </p>
 
         <form @submit.prevent="register" action="" class="space-y-5">
@@ -94,7 +94,7 @@
             <!-- Login Redirect -->
             <p class="text-center text-sm text-gray-600 mt-3">
                 Already have an account?
-                <a href="{{ route('admin.login') }}" class="text-blue-600 font-medium hover:underline">
+                <a href="{{ route('user.login') }}" class="text-blue-600 font-medium hover:underline">
                     Login here
                 </a>
             </p>
