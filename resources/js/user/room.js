@@ -4,6 +4,7 @@ document.addEventListener('alpine:init', () => {
         success: '',
         serverErrors: '',
         rooms:{},
+        loaded: false,
 
         init(){
             this.fetchData();
@@ -11,6 +12,8 @@ document.addEventListener('alpine:init', () => {
         fetchData() {
             this.$wire.fetchData().then((response) => {
                 this.rooms = response;
+                this.loaded =true;
+                console.log(this.rooms)
                 
             }).catch((error) => {
                 this.serverErrors = "Something went wrong" + error;
