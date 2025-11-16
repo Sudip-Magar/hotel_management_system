@@ -49,4 +49,8 @@ Route::group([], function () {
     Route::get('/room',Room::class)->name('user.room');
     Route::get('/room/room-detail/{id}', RoomDetail::class)->name('user.room-detail');
 
+    Route::middleware('web')->group(function (){
+        Route::post('/logout',[AuthController::class, 'userLogout'])->name('user.logout');
+    });
+
 });

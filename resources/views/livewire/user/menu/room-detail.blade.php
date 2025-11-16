@@ -1,4 +1,4 @@
-<div class="max-w-5xl mx-auto mt-16 bg-white rounded-lg shadow-md overflow-hidden" x-data="roomDatail">
+<div wire:ignore class="max-w-5xl mx-auto mt-16 bg-white rounded-lg shadow-md overflow-hidden" x-data="roomDatail">
     @include('livewire.common.message')
     <!-- loading -->
     <div x-show="!loaded" x-transition.opacity x-cloak

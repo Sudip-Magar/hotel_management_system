@@ -1,5 +1,5 @@
-<div class="max-w-7xl mx-auto p-6" x-data="room">
-
+<div wire:ignore class="max-w-7xl mx-auto p-6" x-data="room">
+    @include('livewire.common.message')
     <h1 class="text-3xl font-bold mb-6 text-center">Available Rooms</h1>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -36,11 +36,7 @@
                             <p class="text-gray-600 mb-1">Price: Rs. <span class="font-medium"
                                     x-text="room.price"></span>
                             </p>
-                            {{-- <p class="text-gray-600 mb-2">Status:
-                        <span
-                            class="px-2 py-1 rounded-full text-white font-medium 
-                    bg-green-500">Available</span>
-                    </p> --}}
+                            
 
                             <!-- Room Features -->
                             <div class="flex flex-wrap gap-2 mb-2 text-gray-700">

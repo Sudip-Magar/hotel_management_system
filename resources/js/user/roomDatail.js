@@ -17,6 +17,7 @@ document.addEventListener('alpine:init', () => {
             guest_phone: '',
             email: '',
         },
+        user:{},
         showModal: false,
         loaded: false,
         activeImage: 0,
@@ -27,8 +28,9 @@ document.addEventListener('alpine:init', () => {
 
         fetchData() {
             this.$wire.fetchData().then((response) => {
-                this.room = response;
-                console.log(this.room)
+                this.room = response[0];
+                this.user = response[1]
+                console.log(this.user)
                 this.loaded = true;
             }).catch((error) => {
 
