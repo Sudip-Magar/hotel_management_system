@@ -149,6 +149,17 @@
                     </template>
                 </div>
 
+
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700 font-medium mb-2">Enter Guest Email</label>
+                    <input type="email" id="email" x-model="data.email"
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                        placeholder="Eg: Your Email Address">
+                    <template x-if="errors.email">
+                        <small class="text-red-500" x-text="errors.email"></small>
+                    </template>
+                </div>
+
                 <div class=" mx-auto bg-white p-6 rounded-xl shadow-md my-10">
                     <h2 class="text-xl font-semibold text-gray-800 mb-4">Reservation Date</h2>
 

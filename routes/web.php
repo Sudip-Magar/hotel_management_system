@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MailController;
 use App\Livewire\User\Auth\Register;
 use App\Livewire\User\Menu\Home;
 use App\Livewire\User\Menu\Room;
