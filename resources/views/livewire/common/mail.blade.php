@@ -80,16 +80,20 @@
         <h3 class="text-lg font-semibold text-gray-800 mb-2">Payment Information</h3>
         <table class="w-full text-gray-700 text-sm">
             <tr>
-                <td class="py-1 font-semibold w-40">Total Price:</td>
-                <td>Rs. {{ number_format($details['total_price']) }}</td>
+                 <td class="py-1 font-semibold w-40">Transaction id:</td>
+                <td>{{ $details['transaction_id'] }}</td>
+            </tr>
+            <tr>
+                <td class="py-1 font-semibold w-40">Total Paid:</td>
+                <td>Rs. {{ number_format($details['amount']) }}</td>
             </tr>
             <tr>
                 <td class="py-1 font-semibold">Payment Status:</td>
-                <td>{{ ucfirst($details['payment']) }}</td>
+                <td>{{ ucfirst($details['status']) }}</td>
             </tr>
             <tr>
-                <td class="py-1 font-semibold">Booking Status:</td>
-                <td>{{ ucfirst($details['status']) }}</td>
+                <td class="py-1 font-semibold">Payment Method:</td>
+                <td>{{ ucfirst($details['method']) }}</td>
             </tr>
         </table>
 
