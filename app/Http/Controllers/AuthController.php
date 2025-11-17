@@ -19,4 +19,8 @@ class AuthController extends Controller
         session()->flash('success', 'Logged out successfully');
         return redirect()->back();
     }
+
+    public function mail(){
+        return view('livewire.common.mail');
+    }
 }

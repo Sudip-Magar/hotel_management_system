@@ -16,8 +16,9 @@ document.addEventListener('alpine:init', () => {
             guest_name: '',
             guest_phone: '',
             email: '',
+            method: '',
         },
-        user:{},
+        user: {},
         showModal: false,
         loaded: false,
         activeImage: 0,
@@ -29,8 +30,11 @@ document.addEventListener('alpine:init', () => {
         fetchData() {
             this.$wire.fetchData().then((response) => {
                 this.room = response[0];
-                this.user = response[1]
-                console.log(this.user)
+                if (response[1]) {
+                    this.data.guest_name = response[1].name;
+                    this.data.guest_phone = response[1].phone;
+                    this.data.email = response[1].email
+                }
                 this.loaded = true;
             }).catch((error) => {
 
@@ -79,6 +83,17 @@ document.addEventListener('alpine:init', () => {
             }
             else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.data.email)) {
                 this.errors.email = "Please enter a valid email address.";
+            }
+
+            if (!this.data.method) {
+                this.errors.method = "Please enter the medium of transaction";
+            }
+
+            if (Number(this.amount) === 0) {
+                this.errors.amount = "please pay mininum 15% some amount to cofirm the book"
+            }
+            if (this.amount < (0.15 * this.price)) {
+                this.error.amount = "Amount must be at least 15% of the price";
             }
 
             return Object.keys(this.errors).length === 0;
@@ -156,14 +171,15 @@ document.addEventListener('alpine:init', () => {
                 booking_status: 'booked',
                 guest_name: this.data.guest_name,
                 guest_phone: this.data.guest_phone,
-                email: this.data.email
+                email: this.data.email,
+                method: this.data.method,
+                amount: this.amount,
             };
 
             this.$wire.reserve(payload).then((response) => {
                 this.serverErrors = '';
                 this.errors = {};
                 this.success = '';
-                console.log(response)
                 if (response.original.errors) {
                     Object.entries(response.original.errors).forEach(([key, message]) => {
                         this.errors[key] = message[0];
@@ -183,10 +199,7 @@ document.addEventListener('alpine:init', () => {
                     this.showModal = false;
                 }
             }).catch((error) => {
-                console.log(error);
             })
-
-            // console.log(payload);
         },
 
         get days() {
@@ -212,6 +225,17 @@ document.addEventListener('alpine:init', () => {
 
             else {
                 return this.days * this.room.price;
+            }
+        },
+
+        get amount() {
+
+            if (this.price > 0) {
+                return (15 / 100) * this.price;
+
+            }
+            else {
+                return new Intl.NumberFormat().format(0);
             }
         },
 

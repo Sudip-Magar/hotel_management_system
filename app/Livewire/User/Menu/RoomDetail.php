@@ -2,6 +2,7 @@
 
 namespace App\Livewire\User\Menu;
 
+use App\Models\Payment;
 use App\Models\Reservation;
 use App\Mail\reservation as mailReservation;
 use App\Models\Room;
@@ -31,7 +32,7 @@ class RoomDetail extends Component
             return [$room,$this->user];
     }
 
-    public function sendMail($payload)
+    public function sendMail($payload,$paymentValidate)
     {
         $details = [
             'name' => $payload['guest_name'],
@@ -40,14 +41,16 @@ class RoomDetail extends Component
             'checkin' => $payload['check_in'],
             'checkout' => $payload['check_out'],
             'total_nights' => $payload['total_nights'],
-            'payment' => $payload['payment_status'],
-            'status' => $payload['booking_status'],
             'total_price' => $payload['total_price'],
             'room' => $this->room->room_number,
             'category' => $this->room->category->name,
             'guest_type' => $this->room->guestType->name,
             'services' => $this->room->services->pluck('name')->toArray(),
             'features' => $this->room->roomFeature,
+            'amount' => $payload['amount'],
+            'method' => $payload['method'],
+            'transaction_id' => $paymentValidate['transaction_id'],
+            'status' => $paymentValidate['status']
         ];
 
         $subject = "Room Reservation Confirmed – " . $this->room->room_number;
@@ -73,11 +76,21 @@ class RoomDetail extends Component
                 'email' => 'required|email'
             ])->validate();
 
+            $paymentValidate = Validator($payload,[
+                'amount' => 'required',
+                'method' => 'required',
+            ])->validate();
+
             DB::beginTransaction();
             try {
                 // if(!$validation['roo'])
-                Reservation::create($validation);
-                $this->sendMail($payload);
+                $reservation = Reservation::create($validation);
+                
+                $paymentValidate['reservation_id'] = $reservation->id;
+                $paymentValidate['transaction_id'] ='TX-' . time() . '-' . rand(1000, 9999);
+                $paymentValidate['status'] = 'success';
+                Payment::create($paymentValidate);
+                $this->sendMail($payload,$paymentValidate);
                 DB::commit();
                 return response()->json(['success' => 'Reservation Successfull'], 200);
             } catch (\Exception $e) {

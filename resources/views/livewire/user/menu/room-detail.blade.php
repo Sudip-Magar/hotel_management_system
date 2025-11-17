@@ -123,41 +123,44 @@
     </template>
 
     <div x-show="showModal" x-transition.opacity x-cloak
-        class="fixed inset-0 flex items-center justify-center bg-gray-900/80 z-75">
-        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+        class="fixed inset-0 bg-gray-900/80 z-75 overflow-y-auto py-10">
+        <div class="bg-white rounded-lg shadow-xl w-[90%] max-w-3xl mx-auto p-6 relative">
             <span class="absolute top-5 right-5 cursor-pointer" @click.prevent="closeModel"><i
                     class="fa-solid fa-xmark"></i></span>
 
             <form @submit.prevent="reserve">
-                <div class="mb-4">
-                    <label for="name" class="block text-gray-700 font-medium mb-2">Enter Guest Name</label>
-                    <input type="text" id="name" x-model="data.guest_name"
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                        placeholder="Eg: Your Name">
-                    <template x-if="errors.guest_name">
-                        <small class="text-red-500" x-text="errors.guest_name"></small>
-                    </template>
-                </div>
+                <div class="mx-auto bg-white p-6 rounded-xl shadow-md my-10">
+                    <div class="mb-4">
+                        <label for="name" class="block text-gray-700 font-medium mb-2">Enter Guest Name</label>
+                        <input type="text" id="name" x-model="data.guest_name"
+                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                            placeholder="Eg: Your Name">
+                        <template x-if="errors.guest_name">
+                            <small class="text-red-500" x-text="errors.guest_name"></small>
+                        </template>
+                    </div>
 
-                <div class="mb-4">
-                    <label for="phone" class="block text-gray-700 font-medium mb-2">Enter Guest Number</label>
-                    <input type="text" id="phone" x-model="data.guest_phone"
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                        placeholder="Eg: Your Mobile Number">
-                    <template x-if="errors.guest_phone">
-                        <small class="text-red-500" x-text="errors.guest_phone"></small>
-                    </template>
-                </div>
+                    <div class="mb-4">
+                        <label for="phone" class="block text-gray-700 font-medium mb-2">Enter Guest
+                            Number</label>
+                        <input type="text" id="phone" x-model="data.guest_phone"
+                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                            placeholder="Eg: Your Mobile Number">
+                        <template x-if="errors.guest_phone">
+                            <small class="text-red-500" x-text="errors.guest_phone"></small>
+                        </template>
+                    </div>
 
 
-                <div class="mb-4">
-                    <label for="email" class="block text-gray-700 font-medium mb-2">Enter Guest Email</label>
-                    <input type="email" id="email" x-model="data.email"
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                        placeholder="Eg: Your Email Address">
-                    <template x-if="errors.email">
-                        <small class="text-red-500" x-text="errors.email"></small>
-                    </template>
+                    <div class="mb-4">
+                        <label for="email" class="block text-gray-700 font-medium mb-2">Enter Guest Email</label>
+                        <input type="email" id="email" x-model="data.email"
+                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                            placeholder="Eg: Your Email Address">
+                        <template x-if="errors.email">
+                            <small class="text-red-500" x-text="errors.email"></small>
+                        </template>
+                    </div>
                 </div>
 
                 <div class=" mx-auto bg-white p-6 rounded-xl shadow-md my-10">
@@ -221,6 +224,37 @@
                             <span class="text-red-500" x-text="dateError"></span>
                         </div>
                     </template>
+                </div>
+
+                <div class="mx-auto bg-white p-6 rounded-xl shadow-md my-10">
+                    <div class="mb-4">
+                        <label for="method" class="block text-gray-700 font-medium mb-2">Enter Payment
+                            Method</label>
+                        <select x-model="data.method"
+                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                            <option value="">-- Select Method --</option>
+                            <option value="esewa">E-sewa</option>
+                            <option value="Khalti">Kalti</option>
+                            <option value="debit card">Debit Card</option>
+                            <option value="Ime Pay">Ime Pay</option>
+                        </select>
+                        <template x-if="errors.method">
+                            <small class="text-red-500" x-text="errors.method"></small>
+                        </template>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="flex gap-0 lg:gap-2 lg:flex-row flex-col mb-2 items-center">
+                            <label for="phone" class="block text-gray-700 font-medium">Enter Amount</label>
+                            <small class="text-orange-500">(Please pay minimum 15% of the total price via any medium to fixed the book)</small>
+                        </div>
+                        <input type="number" id="phone" x-model="amount"
+                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                            placeholder="Eg: Your Mobile Number">
+                        <template x-if="errors.amount">
+                            <small class="text-red-500" x-text="errors.amount"></small>
+                        </template>
+                    </div>
                 </div>
 
                 <div class="flex justify-end space-x-3">

@@ -63,8 +63,6 @@
 
                                         <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm"
                                             x-text="service.name"></span>
-                                        <!-- Add more services dynamically -->
-
                                     </template>
                                 </div>
                             </div>
