@@ -4,7 +4,7 @@
     <div x-show="!loaded" x-transition.opacity x-cloak
         class="fixed inset-0 flex items-center justify-center bg-gray-900/80 z-75">
         <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
-            Loading rooms...
+            Loading Booking...
         </div>
     </div>
 

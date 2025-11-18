@@ -11,6 +11,7 @@ import './admin/room/viewRoom'
 import './admin/guestType'
 import './admin/service'
 import './admin/booking/bookList'
+import './admin/booking/bookingView'
 
 import './user/room'
 import './user/roomDatail'
