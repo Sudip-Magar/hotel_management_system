@@ -83,7 +83,9 @@ class RoomDetail extends Component
 
             DB::beginTransaction();
             try {
-                // if(!$validation['roo'])
+                if(Auth::guard('web')->check()){
+                    $validation['user_id'] = Auth::guard('web')->user()->id;
+                }
                 $reservation = Reservation::create($validation);
                 
                 $paymentValidate['reservation_id'] = $reservation->id;
