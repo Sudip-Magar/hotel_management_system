@@ -1,20 +1,23 @@
 document.addEventListener('alpine:init', () => {
-    Alpine.data('bookingList', () => ({
-        bookings: {},
+    Alpine.data('bookingView', () => ({
+        booking: {},
+        loaded: false,
+
         init() {
             this.fetchData();
         },
         fetchData() {
-            this.$wire.allBook().then((response) => {
-                this.bookings = response
-                console.log(this.bookings)
+            this.$wire.fetchData().then((response) => {
+                this.booking = response
+                this.loaded = true;
+                console.log(this.booking)
             }).catch((error) => {
-                console.log(error);
+                console.log(error)
             })
         },
 
-        checkIn(date) {
-            const target = new Date(date);
+        get checkIn() {
+            const target = new Date(this.booking.check_in);
             const today = new Date();
 
             target.setHours(0, 0, 0, 0);
@@ -39,11 +42,5 @@ document.addEventListener('alpine:init', () => {
             }
         },
 
-        checkInColor(text) {
-            if (text.includes('left')) return 'text-green-600';
-            if (text === 'Today') return 'text-blue-600';
-            if (text.includes('ago')) return 'text-red-600';
-            return 'text-gray-600';
-        }
     }))
 })

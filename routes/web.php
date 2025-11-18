@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MailController;
 use App\Livewire\Admin\Menus\Booking\BookingList;
+use App\Livewire\Admin\Menus\Booking\BookingView;
 use App\Livewire\User\Auth\Register;
 use App\Livewire\User\Menu\Home;
 use App\Livewire\User\Menu\Room;
@@ -40,6 +41,7 @@ Route::prefix(('admin'))->group(function () {
         Route::get('/guest-type',adminGuestType::class)->name('admin.guest-type');
         Route::get('/service',adminService::class)->name('admin.service');
         Route::get('/booking/list',BookingList::class)->name('admin.booking-list');
+        Route::get('/booking/view/{id}',BookingView::class)->name('admin.booking-view');
     });
 });
 
