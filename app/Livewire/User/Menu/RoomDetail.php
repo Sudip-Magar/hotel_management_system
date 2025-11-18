@@ -90,6 +90,8 @@ class RoomDetail extends Component
                 
                 $paymentValidate['reservation_id'] = $reservation->id;
                 $paymentValidate['transaction_id'] ='TX-' . time() . '-' . rand(1000, 9999);
+                $paymentValidate['total_amount'] = $validation['total_price'];
+                $paymentValidate['amount_left'] = $paymentValidate['total_amount'] - $paymentValidate['amount'];
                 $paymentValidate['status'] = 'success';
                 Payment::create($paymentValidate);
                 $this->sendMail($payload,$paymentValidate);

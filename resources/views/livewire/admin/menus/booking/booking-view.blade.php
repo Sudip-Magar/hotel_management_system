@@ -1,10 +1,8 @@
 <div wire:ignore class="max-w-5xl mx-auto mt-12 p-6" x-data="bookingView">
-    <div x-show="!loaded" x-transition.opacity x-cloak
-        class="fixed inset-0 flex items-center justify-center bg-gray-900/80 z-75">
-        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
-            Loading rooms...
-        </div>
-    </div>
+    <a href="{{ route('admin.booking-list') }}"
+        class="bg-blue-500 inline-block py-1 px-3 text-white rounded-sm hover:bg-blue-600">
+        <i class="fa-solid fa-arrow-left"></i> <span>Back</span>
+    </a>
 
     <!-- Header -->
     <h1 class="text-4xl font-bold text-gray-800 mb-10 text-center">Reservation Details</h1>
@@ -93,7 +91,7 @@
             </div>
 
             <!-- User Info -->
-            <div class="p-6 bg-green-50 rounded-xl shadow-sm">
+            <div class="p-6 bg-green-50 rounded-xl shadow-sm space-y-3">
                 <h2 class="text-xl font-semibold text-green-700 border-b pb-2">User Information</h2>
                 <template x-if="booking.user">
                     <div class="space-y-3">
@@ -122,16 +120,22 @@
                             <th class="px-4 py-2 text-left text-sm font-medium text-indigo-800">Method</th>
                             <th class="px-4 py-2 text-left text-sm font-medium text-indigo-800">Amount</th>
                             <th class="px-4 py-2 text-left text-sm font-medium text-indigo-800">Status</th>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-indigo-800">Due</th>
                             <th class="px-4 py-2 text-left text-sm font-medium text-indigo-800">Transaction ID</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-indigo-200">
-                        <tr>
-                            <td class="px-4 py-2 text-sm text-gray-700">Khalti</td>
-                            <td class="px-4 py-2 text-sm text-gray-700">$3,000</td>
-                            <td class="px-4 py-2 text-sm text-green-600 font-semibold">Success</td>
-                            <td class="px-4 py-2 text-sm text-gray-700">TX-1763443970-4516</td>
-                        </tr>
+                        <template x-if="booking.payments || booking.payments > 0">
+                            <template x-for="payment in booking.payments">
+                                <tr>
+                                    <td class="px-4 py-2 text-sm text-gray-700" x-text="payment.method"></td>
+                                    <td class="px-4 py-2 text-sm text-gray-700">Rs. <span x-text="payment.amount"></span></td>
+                                    <td class="px-4 py-2 text-sm text-green-600 font-semibold" x-text="payment.status"></td>
+                                    <td class="px-4 py-2 text-sm text-green-600 font-semibold" x-text="payment.amount_left"></td>
+                                    <td class="px-4 py-2 text-sm text-gray-700" x-text="payment.transaction_id"></td>
+                                </tr>
+                            </template>
+                        </template>
                     </tbody>
                 </table>
             </div>
@@ -140,8 +144,8 @@
         <!-- Action Buttons -->
         <div class="flex justify-center md:justify-end gap-4 mt-6">
             <button
-                class="bg-blue-500 text-white px-6 py-2 rounded-xl hover:bg-blue-600 flex items-center gap-2 transition">
-                <i class="fas fa-edit"></i> Edit
+                class="cursor-pointer bg-blue-500 text-white px-6 py-2 rounded-xl hover:bg-blue-600 flex items-center gap-2 transition">
+                <i class="fas fa-edit"></i> Collect Money
             </button>
             <button
                 class="bg-red-500 text-white px-6 py-2 rounded-xl hover:bg-red-600 flex items-center gap-2 transition">
