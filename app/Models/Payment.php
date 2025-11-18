@@ -11,7 +11,9 @@ class Payment extends Model
         'amount',
         'method',
         'transaction_id',
-        'status'
+        'status',
+        'total_amount',
+        'amount_left'
     ];
 
     public function reservation()

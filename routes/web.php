@@ -6,6 +6,7 @@ use App\Livewire\Admin\Menus\Booking\BookingList;
 use App\Livewire\Admin\Menus\Booking\BookingView;
 use App\Livewire\User\Auth\Register;
 use App\Livewire\User\Menu\Home;
+use App\Livewire\User\Menu\Reservation;
 use App\Livewire\User\Menu\Room;
 use App\Livewire\User\Menu\RoomDetail;
 use Illuminate\Support\Facades\Route;
@@ -55,6 +56,7 @@ Route::group([], function () {
 
     Route::middleware('web')->group(function (){
         Route::post('/logout',[AuthController::class, 'userLogout'])->name('user.logout');
+        Route::get('/your-reservations',Reservation::class)->name('user.reservation');
     });
 
 });
