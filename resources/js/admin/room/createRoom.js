@@ -51,7 +51,6 @@ document.addEventListener('alpine:init', () => {
 
         fetchData() {
             this.$wire.fetchData().then((response) => {
-                console.log(response)
                 this.categories = response[0];
                 this.guestType = response[1];
                 this.servicesDb = response[2];

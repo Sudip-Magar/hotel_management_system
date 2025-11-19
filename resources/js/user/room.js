@@ -13,7 +13,6 @@ document.addEventListener('alpine:init', () => {
             this.$wire.fetchData().then((response) => {
                 this.rooms = response;
                 this.loaded =true;
-                console.log(this.rooms)
                 
             }).catch((error) => {
                 this.serverErrors = "Something went wrong" + error;

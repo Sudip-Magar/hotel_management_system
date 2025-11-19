@@ -7,13 +7,20 @@
                 <a href="{{ route('user.home') }}" class="text-2xl font-bold text-green-400">HimalayaHotel</a>
             </div>
 
+            <div class="hidden md:flex items-center space-x-2">
+                @if (Auth::guard('web')->check())
+                    <a href="{{ route('user.reservation') }}"
+                        class="hover:bg-green-400 duration-150 py-1 px-2 rounded-md {{ request()->is('your-reservations') ? 'bg-green-300 text-green-800' : '' }}">Reservation</a>
+                @endif
+            </div>
 
             <!-- User Profile -->
             <div class="lg:flex items-center space-x-4 hidden">
                 {{-- <span class="hidden md:block">{{ Auth::guard('admin')->user()->name }}</span> --}}
                 @if (Auth::guard('web')->check())
                     <span>{{ Auth::guard('web')->user()->name }}</span>
-                    <form method="POST" action="{{ route('user.logout') }}" class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded">
+                    <form method="POST" action="{{ route('user.logout') }}"
+                        class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded">
                         @csrf
                         <button class="cursor-pointer" type="submit">Logout</button>
                     </form>

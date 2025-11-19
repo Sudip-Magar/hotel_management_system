@@ -169,7 +169,6 @@ document.addEventListener('alpine:init', () => {
 
             this.$wire.updateGuest(this.temData).then((response) => {
                 if(response.original.errors){
-                    console.log(response)
                     this.errors.tempName = response.original.errors.name;
                 }
 
