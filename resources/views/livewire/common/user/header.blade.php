@@ -8,10 +8,13 @@
             </div>
 
             <div class="hidden md:flex items-center space-x-2">
+                <a href="{{ route('user.room') }}"
+                    class="hover:bg-green-400 duration-150 py-1 px-2 rounded-md {{ request()->is('room') ? 'bg-green-300 text-green-800' : '' }}">Room</a>
                 @if (Auth::guard('web')->check())
                     <a href="{{ route('user.reservation') }}"
                         class="hover:bg-green-400 duration-150 py-1 px-2 rounded-md {{ request()->is('your-reservations') ? 'bg-green-300 text-green-800' : '' }}">Reservation</a>
                 @endif
+
             </div>
 
             <!-- User Profile -->
