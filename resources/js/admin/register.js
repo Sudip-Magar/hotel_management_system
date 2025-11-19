@@ -87,7 +87,6 @@ document.addEventListener('alpine:init', () => {
                 this.errors = {};
                 this.success = '';
                 this.serverErrors = '';
-                console.log(response)
                 if (response.original.errors) {
                     Object.entries(response.original.errors).forEach(([key, message]) => {
                         this.errors[key] = message[0];
@@ -99,7 +98,6 @@ document.addEventListener('alpine:init', () => {
                     this.timeoutFunc();
                 }
             }).catch((error) => {
-                console.log(error)
             });
         },
     }))

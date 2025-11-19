@@ -10,9 +10,7 @@ document.addEventListener('alpine:init', () => {
             this.$wire.fetchData().then((response) => {
                 this.booking = response
                 this.loaded = true;
-                console.log(this.booking)
             }).catch((error) => {
-                console.log(error)
             })
         },
 
