@@ -158,11 +158,11 @@
 
         <!-- Action Buttons -->
         <div class="flex justify-center md:justify-end gap-4 mt-6">
-            <button :class="booking.booking_status == 'checked_in' ? 'inline-block' : 'hidden'"
+            <button :class="booking.booking_status == 'checked_in' ? 'inline-block' : 'hidden'" @click.prevent="storeCheckOut"
                 class="cursor-pointer bg-orange-500 text-white px-6 py-2 rounded-xl hover:bg-orange-600 flex items-center gap-2 transition">
                 <i class="fas fa-right-from-bracket"></i> Check Out
             </button>
-            <button :class="checkIn.includes('Today') || checkIn.includes('ago') ? 'inline-block' : 'hidden'"
+            <button :class="(checkIn.includes('Today') || checkIn.includes('ago')) && booking.booking_status == 'booked' ? 'inline-block' : 'hidden'" @click.prevent="storeCheckIn"
                 class="cursor-pointer bg-blue-500 text-white px-6 py-2 rounded-xl hover:bg-blue-600 flex items-center gap-2 transition">
                 <i class="fas fa-right-to-bracket"></i> Check In
             </button>
