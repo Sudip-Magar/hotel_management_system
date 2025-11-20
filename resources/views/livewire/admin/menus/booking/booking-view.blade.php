@@ -1,4 +1,5 @@
 <div wire:ignore class="max-w-5xl mx-auto mt-12 p-6" x-data="bookingView">
+    @include('livewire.common.message')
     <a href="{{ route('admin.booking-list') }}"
         class="bg-blue-500 inline-block py-1 px-3 text-white rounded-sm hover:bg-blue-600">
         <i class="fa-solid fa-arrow-left"></i> <span>Back</span>
@@ -34,6 +35,13 @@
                             'text-red-600': checkIn.includes('ago')
                         }"
                         x-text="checkIn"></span></p>
+                <p><span class="font-medium text-gray-700">Check-out day:</span> <span
+                        :class="{
+                            'text-green-600': checkOut.includes('left'),
+                            'text-blue-600': checkOut === 'Today',
+                            'text-red-600': checkOut.includes('ago')
+                        }"
+                        x-text="checkOut"></span></p>
                 <p><span class="font-medium text-gray-700">Check-in:</span> <span
                         x-text="new Date(booking.check_in).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })"></span>
                 </p>
@@ -129,13 +137,20 @@
                             <template x-for="payment in booking.payments">
                                 <tr>
                                     <td class="px-4 py-2 text-sm text-gray-700" x-text="payment.method"></td>
-                                    <td class="px-4 py-2 text-sm text-gray-700">Rs. <span x-text="payment.amount"></span></td>
-                                    <td class="px-4 py-2 text-sm text-green-600 font-semibold" x-text="payment.status"></td>
-                                    <td class="px-4 py-2 text-sm text-green-600 font-semibold" x-text="payment.amount_left"></td>
+                                    <td class="px-4 py-2 text-sm text-gray-700">Rs. <span
+                                            x-text="payment.amount"></span></td>
+                                    <td class="px-4 py-2 text-sm text-green-600 font-semibold" x-text="payment.status">
+                                    </td>
+                                    <td class="px-4 py-2 text-sm text-green-600 font-semibold"
+                                        x-text="payment.amount_left"></td>
                                     <td class="px-4 py-2 text-sm text-gray-700" x-text="payment.transaction_id"></td>
                                 </tr>
                             </template>
                         </template>
+                        <tr class="bg-indigo-100">
+                            <th colspan="4" class="px-4 py-2 text-sm text-gray-700 text-start">Total Paid</th>
+                            <th class="px-4 py-2 text-sm text-gray-700" x-text="totalPaid"></th>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -143,16 +158,60 @@
 
         <!-- Action Buttons -->
         <div class="flex justify-center md:justify-end gap-4 mt-6">
-            <button
-                class="cursor-pointer bg-blue-500 text-white px-6 py-2 rounded-xl hover:bg-blue-600 flex items-center gap-2 transition">
-                <i class="fas fa-edit"></i> Collect Money
+            <button :class="booking.booking_status == 'checked_in' ? 'inline-block' : 'hidden'"
+                class="cursor-pointer bg-orange-500 text-white px-6 py-2 rounded-xl hover:bg-orange-600 flex items-center gap-2 transition">
+                <i class="fas fa-right-from-bracket"></i> Check Out
             </button>
-            <button
-                class="bg-red-500 text-white px-6 py-2 rounded-xl hover:bg-red-600 flex items-center gap-2 transition">
-                <i class="fas fa-trash"></i> Delete
+            <button :class="checkIn.includes('Today') || checkIn.includes('ago') ? 'inline-block' : 'hidden'"
+                class="cursor-pointer bg-blue-500 text-white px-6 py-2 rounded-xl hover:bg-blue-600 flex items-center gap-2 transition">
+                <i class="fas fa-right-to-bracket"></i> Check In
+            </button>
+            <button  :class="lastPayment.amount_left == 0 ? 'hidden' : 'inline-block'" @click.prevent="collectPayment"
+                class="cursor-pointer bg-green-500 text-white px-6 py-2 rounded-xl hover:bg-green-600 flex items-center gap-2 transition">
+                <i class="fas fa-hand-holding-dollar"></i> Collect Money
             </button>
         </div>
 
     </div>
-    x
+
+    <!-- payment form -->
+    <div x-show="showModal" x-transition.opacity x-cloak
+        class="fixed inset-0 flex items-center justify-center bg-gray-900/80 z-75">
+        <div @click.outside = 'closeModel' class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+            <span class="absolute top-5 right-5 cursor-pointer" @click.prevent="closeModel"><i
+                    class="fa-solid fa-xmark"></i></span>
+
+            <div class="mx-auto bg-white p-6 rounded-xl shadow-md my-10">
+                <div class="mb-4">
+                    <span for="method" class="block text-gray-700 font-medium mb-2">Payment
+                        Method: <span class="font-semibold"> Cash</span></span>
+                  
+                </div>
+
+                <div class="mb-4">
+                    <div class="flex gap-0 lg:gap-2 lg:flex-row flex-col mb-2 items-center">
+                        <label for="phone" class="block text-gray-700 font-medium">Enter Amount</label>
+                    </div>
+                    <input type="number" id="phone" x-model="data.amount"
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                        placeholder="Enter Amount to pay">
+                    <template x-if="errors.amount">
+                        <small class="text-red-500" x-text="errors.amount"></small>
+                    </template>
+                </div>
+            </div>
+
+            <div class="flex justify-end space-x-3">
+                <button class="cursor-pointer px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+                    @click.prevent="closeModel">
+                    Cancel
+                </button>
+
+                <button class="cursor-pointer px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                    @click.prevent="confirmPayment">
+                    Collect Money
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
