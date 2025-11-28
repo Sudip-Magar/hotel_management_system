@@ -11,11 +11,10 @@ use App\Models\Room as modelRoom;
 
 class Room extends Component
 {
-    public function fetchData()
+    public function fetchData(): array
     {
         $rooms = modelRoom::with('category', 'roomImages', 'services', 'guestType', 'roomFeature')->latest()->get();
         $categories = RoomCategory::all();
-        // $rooms->load('category', 'roomImages', 'services', 'guestType', 'roomFeature');
         return [$rooms, $categories];
 
     }

@@ -19,7 +19,7 @@
             <!-- Search Bar -->
             <div class=" my-5">
                 <label for="room"> Search Room:</label>
-                <input type="text" class="border py-1 px-2 rounded-lg  outline-gray-800 w-full shadow-sm"
+                <input type="text" class="border py-1 px-2 rounded-lg  outline-gray-800 w-full shadow-sm" x-model="search"
                     placeholder="Search Room.....">
             </div>
             <h2 class="text-xl font-semibold mb-4">Filter by Category</h2>
@@ -29,7 +29,7 @@
                     <label class="flex items-center gap-3 cursor-pointer">
                         <input type="checkbox" :checked="category === dbCategory.name"
                             @change.prevent="category = $event.target.checked ? dbCategory.name : ''"
-                            class="h-4 w-4 rounded border-gray-300" :value="dbCategory.name"
+                            class="h-4 w-4 rounded border-gray-300 cursor-pointer" :value="dbCategory.name"
                             :id="'cat-' + dbCategory.id">
 
                         <span x-text="dbCategory.name" class="text-gray-700"></span>
