@@ -21,7 +21,7 @@ class BookingView extends Component
     {
         $booking = $this->reservation->load('user', 'room', 'payments', 'room.category');
         $lastPayment = $this->reservation->payments->last();
-        return [$booking,$lastPayment];
+        return [$booking, $lastPayment];
     }
 
     public function confirmPayment($data)
@@ -50,6 +50,32 @@ class BookingView extends Component
             }
         } catch (ValidationException $e) {
             return response()->json(['errors' => $e->errors()], 422);
+        }
+    }
+
+    public function storeCheckIn()
+    {
+        try {
+            $reservation = Reservation::find($this->reservation->id);
+            $reservation->update(['booking_status' => 'checked_in']);
+            DB::commit();
+            return response()->json(['success' => 'Client Checked in Successfully'], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => 'Something went wrong' . $e->getMessage()], 500);
+        }
+    }
+
+    public function storeCheckOut()
+    {
+        try {
+            $reservation = Reservation::find($this->reservation->id);
+            $reservation->update(['booking_status' => 'checked_out']);
+            DB::commit();
+            return response()->json(['success' => 'Client Checked out Successfully'], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => 'Something went wrong' . $e->getMessage()], 500);
         }
     }
 

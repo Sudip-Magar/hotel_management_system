@@ -12,7 +12,7 @@ document.addEventListener('alpine:init', () => {
             amount: '',
             total_amount: '',
         },
-        lastPayment:{},
+        lastPayment: {},
 
         init() {
             this.fetchData();
@@ -144,15 +144,49 @@ document.addEventListener('alpine:init', () => {
             })
         },
 
-        get totalPaid(){
-           if(this.booking.payments){
-             const payments = this.booking.payments;
-             let total = 0;
-             for(let payment of payments){
-                total += Number(payment.amount);
-             }
-            return total
-           }
-        }
+        get totalPaid() {
+            if (this.booking.payments) {
+                const payments = this.booking.payments;
+                let total = 0;
+                for (let payment of payments) {
+                    total += Number(payment.amount);
+                }
+                return total
+            }
+        },
+
+        storeCheckIn() {
+            this.$wire.storeCheckIn().then((response) => {
+                if (response.original.error) {
+                    console.log(response);
+                    this.serverErrors = response.original.error;
+                }
+
+                else if (response.original.success) {
+                    this.success = response.original.success;
+                    this.timeoutFunc();
+                    this.fetchData();
+                }
+            }).catch((error) => {
+                this.serverErrors = "Something went wrong ", error;
+            })
+        },
+
+        storeCheckOut() {
+            this.$wire.storeCheckOut().then((response) => {
+                if (response.original.error) {
+                    console.log(response);
+                    this.serverErrors = response.original.error;
+                }
+
+                else if (response.original.success) {
+                    this.success = response.original.success;
+                    this.timeoutFunc();
+                    this.fetchData();
+                }
+            }).catch((error) => {
+                this.serverErrors = "Something went wrong ", error;
+            })
+        },
     }))
 })

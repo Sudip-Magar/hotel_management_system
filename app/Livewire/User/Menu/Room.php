@@ -2,6 +2,7 @@
 
 namespace App\Livewire\User\Menu;
 
+use App\Models\RoomCategory;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use App\Models\Room as modelRoom;
@@ -10,11 +11,11 @@ use App\Models\Room as modelRoom;
 
 class Room extends Component
 {
-    public function fetchData()
+    public function fetchData(): array
     {
         $rooms = modelRoom::with('category', 'roomImages', 'services', 'guestType', 'roomFeature')->latest()->get();
-        // $rooms->load('category', 'roomImages', 'services', 'guestType', 'roomFeature');
-        return $rooms;
+        $categories = RoomCategory::all();
+        return [$rooms, $categories];
 
     }
 

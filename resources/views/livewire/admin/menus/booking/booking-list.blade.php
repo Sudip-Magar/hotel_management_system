@@ -1,4 +1,7 @@
 <div class="max-w-[90%] mx-auto mt-10 p-6 bg-white rounded-lg shadow-md" x-data="bookingList">
+    <div>
+        <input class="border py-2 px-10 rounded-full" type="text" placeholder="Search Reservation...." x-model="search">
+    </div>
     <div class="flex my-5 justify-end mx-5">
         <div class="w-5 h-5 bg-green-600 rounded-l-sm cursor-pointer" title="Future Check_in"></div>
         <div class="w-5 h-5 bg-blue-600  cursor-pointer" title="Today Check_in"></div>
@@ -12,6 +15,7 @@
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Room Number</th>
+                <th>Status</th>
                 <th>Check-in</th>
                 <th>Check-in day</th>
                 <th>Total Nights</th>
@@ -27,6 +31,7 @@
                     <td class="px-4 py-2 border-b" x-text="booking.email"></td>
                     <td class="px-4 py-2 border-b" x-text="booking.guest_phone"></td>
                     <td class="px-4 py-2 border-b" x-text="booking.room.room_number"></td>
+                    <td class="px-4 py-2 border-b"> <span :class="statusColor(booking.booking_status)" x-text="booking.booking_status"></span></td>  
                     <td class="px-4 py-2 border-b" x-text="new Date(booking.check_in).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })"></td>
                     <td class="px-4 py-2 border-b" :class="checkInColor(checkIn(booking.check_in))" x-text="checkIn(booking.check_in)"></td>
                     <td class="px-4 py-2 border-b" x-text="booking.total_nights"></td>

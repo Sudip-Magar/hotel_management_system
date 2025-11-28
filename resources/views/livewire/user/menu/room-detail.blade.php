@@ -48,6 +48,7 @@
                             <p class="text-3xl font-bold text-green-700">Rs. <span
                                     x-text="new Intl.NumberFormat().format(room.price)"></span></p>
                             <p class="text-gray-500 text-sm">Per stay</p>
+                            <p class="font-semibold text-gray-400">Non Refundable</p>
                         </div>
                     </div>
 
@@ -246,7 +247,8 @@
                     <div class="mb-4">
                         <div class="flex gap-0 lg:gap-2 lg:flex-row flex-col mb-2 items-center">
                             <label for="phone" class="block text-gray-700 font-medium">Enter Amount</label>
-                            <small class="text-orange-500">(Please pay minimum 15% of the total price via any medium to fixed the book)</small>
+                            <small class="text-orange-500">(Please pay minimum 15% of the total price via any medium to
+                                fixed the book)</small>
                         </div>
                         <input type="number" id="phone" x-model="amount"
                             class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
